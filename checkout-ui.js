@@ -41,5 +41,6 @@ form.addEventListener('submit',event=>{event.preventDefault();pay()});
 function back(){if(busy)return;if(options.onBack)options.onBack();else close();}
 q('.hgc-back').onclick=back;q('.hgc-edit').onclick=back;
 q('.hgc-photo').addEventListener('error',()=>{q('.hgc-photo').hidden=true});
+q('.hgc-fields').addEventListener('focusin',()=>{q('.hgc-fields').scrollIntoView({behavior:'smooth',block:'center'})});
 window.HGCheckout={open,close,setQuote,setPaymentReady,setExpressAvailable,setStatus:status,submit:pay,getMountPoints:()=>({paymentElement:q('#hgc-payment-element'),expressElement:q('#hgc-express-element')})};
 })();

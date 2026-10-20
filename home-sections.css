@@ -1,0 +1,100 @@
+/* Hello Grecia lower homepage. No unscoped product selectors. */
+#hg-home-sections{--hgh-ink:#082453;--hgh-muted:#536977;--hgh-paper:#faf8f3;--hgh-sea:#427e87;--hgh-line:#dedfd7;container-type:inline-size;background:var(--hgh-paper);color:var(--hgh-ink);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow:clip;isolation:isolate}
+#hg-home-sections *,#hg-home-sections *::before,#hg-home-sections *::after{box-sizing:border-box}
+#hg-home-sections [hidden]{display:none!important}
+#hg-home-sections .hgh-wrap{position:relative;width:min(1180px,calc(100% - 80px));margin-inline:auto}
+#hg-home-sections .hgh-section{position:relative;padding-block:88px}
+#hg-home-sections .hgh-eyebrow{display:flex;align-items:center;gap:15px;margin:0 0 17px;color:var(--hgh-sea);font-size:10px;font-weight:650;letter-spacing:.24em;text-transform:uppercase}
+#hg-home-sections .hgh-eyebrow::after{content:"";width:45px;height:1px;background:currentColor;opacity:.6}
+#hg-home-sections h2{margin:0;font:500 clamp(29px,4.1cqw,51px)/1.14 Georgia,'Times New Roman',serif;letter-spacing:-1.35px;text-wrap:balance;overflow-wrap:anywhere}
+#hg-home-sections h3,#hg-home-sections p{overflow-wrap:anywhere}
+#hg-home-sections .hgh-subtitle{margin:15px 0 0;color:var(--hgh-muted);font-size:16px}
+#hg-home-sections .hgh-heading{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:35px}
+#hg-home-sections button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#hg-home-sections :is(button,a,summary):focus-visible{outline:3px solid #d9ad50;outline-offset:5px}
+#hg-home-sections .hgh-link{display:inline-flex;align-items:center;justify-content:space-between;gap:21px;padding:7px 0;border:0;border-bottom:1px solid #71818c;background:transparent;color:var(--hgh-ink);font-size:12px;font-weight:550;text-align:left}
+#hg-home-sections .hgh-link:hover{color:var(--hgh-sea)}
+#hg-home-sections .hgh-button{display:inline-flex;align-items:center;justify-content:center;gap:28px;min-height:49px;padding:13px 23px;border:1px solid var(--hgh-ink);border-radius:9px;background:var(--hgh-ink);color:white;font-size:13px;font-weight:600;transition:background .2s,transform .2s}
+#hg-home-sections .hgh-button:hover{background:#163e70;transform:translateY(-2px)}
+#hg-home-sections .hgh-icon{width:24px;height:24px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+#hg-home-sections .hgh-decor{position:absolute;pointer-events:none;user-select:none;object-fit:contain;height:auto}
+#hg-home-sections .hgh-olive-corner{width:240px;top:-72px;left:-85px;transform:rotate(92deg);opacity:.7;filter:drop-shadow(6px 9px 7px #626b5124)}
+#hg-home-sections .hgh-shadow-experience{width:360px;top:-140px;right:-185px;opacity:.08;filter:blur(5px);transform:rotate(-18deg)}
+#hg-home-sections .hgh-heading-compass{flex-shrink:0;width:100px;height:100px;opacity:.5;margin-right:20px}
+#hg-home-sections .hgh-experiences{background:radial-gradient(ellipse at 100% 0,#e8e0cf2e,transparent 48%)}
+#hg-home-sections .hgh-experience-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}
+#hg-home-sections .hgh-experience{display:block;position:relative;min-height:365px;width:100%;padding:0;border:0;border-radius:17px;overflow:hidden;background:#59858a;color:white;text-align:left;isolation:isolate;transition:box-shadow .3s,transform .3s}
+#hg-home-sections .hgh-experience img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .7s cubic-bezier(.2,.6,.2,1)}
+#hg-home-sections .hgh-experience::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#06222a05 24%,#06222a12 40%,#042b37e8 100%);z-index:-1}
+#hg-home-sections .hgh-experience:hover{box-shadow:0 15px 32px #132f4320;transform:translateY(-4px)}
+#hg-home-sections .hgh-experience:hover img{transform:scale(1.045)}
+#hg-home-sections .hgh-experience-icon{position:absolute;top:19px;left:19px;display:grid;place-items:center;width:43px;height:43px;border:1px solid #ffffffe0;border-radius:50%;background:#ffffff0a}
+#hg-home-sections .hgh-experience-copy{position:absolute;inset:auto 20px 23px;padding-right:24px}
+#hg-home-sections .hgh-experience-title{display:block;font:500 25px/1.18 Georgia,serif;letter-spacing:-.5px;text-wrap:balance}
+#hg-home-sections .hgh-experience-caption{display:block;margin-top:9px;font-size:11px;color:#fffffff0}
+#hg-home-sections .hgh-round-arrow{position:absolute;right:15px;bottom:23px;display:grid;place-items:center;width:27px;height:27px;border:1px solid #ffffffb0;border-radius:50%;font-size:17px}
+#hg-home-sections .hgh-destinations{padding-top:14px;padding-bottom:85px}
+#hg-home-sections .hgh-destinations::after{content:"";position:absolute;right:-20px;bottom:-12px;width:380px;height:260px;background:url("home-premium-assets/decor-7.svg") right bottom/contain no-repeat;opacity:.5;z-index:-1;pointer-events:none}
+#hg-home-sections .hgh-destination-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px}
+#hg-home-sections .hgh-destination{display:flex;flex-direction:column;min-width:0}
+#hg-home-sections .hgh-destination-photo{position:relative;height:300px}
+#hg-home-sections .hgh-destination-photo img{display:block;width:100%;height:100%;object-fit:cover;border-radius:18px 18px 0 0;-webkit-mask:url("home-premium-assets/decor-8.svg") center/100% 100% no-repeat;mask:url("home-premium-assets/decor-9.svg") center/100% 100% no-repeat}
+#hg-home-sections .hgh-compass{position:absolute;right:18px;bottom:-16px;width:52px;height:52px;border:1px solid #b7b4a4;border-radius:50%;background:url("home-premium-assets/decor-10.svg") center/43px 43px no-repeat,var(--hgh-paper)}
+#hg-home-sections .hgh-destination-body{display:flex;flex:1;flex-direction:column;align-items:start;padding:23px 21px 24px;border:1px solid #e5e0d5;border-top:0;border-radius:0 0 17px 17px}
+#hg-home-sections .hgh-destination-name{margin:0 0 13px;color:var(--hgh-sea);font-size:10px;font-weight:650;letter-spacing:.24em;text-transform:uppercase}
+#hg-home-sections .hgh-destination h3{margin:0;font:500 29px/1.17 Georgia,serif;letter-spacing:-.7px;text-wrap:balance}
+#hg-home-sections .hgh-destination-description{margin:12px 0 23px;color:var(--hgh-muted);font-size:13px}
+#hg-home-sections .hgh-destination .hgh-link{margin-top:auto}
+#hg-home-sections .hgh-feature{display:grid;grid-template-columns:1.1fr 1fr;min-height:530px;background:#f6f2e9;position:relative}
+#hg-home-sections .hgh-feature-photo{position:relative;min-height:420px;overflow:hidden;-webkit-mask:none;mask:none;border-radius:0 9% 11% 0 / 0 52% 48% 0}
+#hg-home-sections .hgh-feature-photo img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 50%}
+#hg-home-sections .hgh-feature-copy{position:relative;align-self:center;padding:57px clamp(28px,5cqw,90px) 57px 36px;isolation:isolate}
+#hg-home-sections .hgh-feature h2{font-size:clamp(42px,5.4cqw,68px);max-width:440px;line-height:1.06}
+#hg-home-sections .hgh-feature-description{max-width:350px;margin:23px 0 30px;color:var(--hgh-muted);font-size:16px}
+#hg-home-sections .hgh-feature-details{display:flex;flex-wrap:wrap;gap:24px;margin:0 0 34px;padding:0;list-style:none}
+#hg-home-sections .hgh-feature-details li{display:flex;flex-direction:column;gap:10px;font-size:10px}
+#hg-home-sections .hgh-feature-details svg{width:33px;height:33px}
+#hg-home-sections .hgh-shadow-feature{width:320px;right:-35px;bottom:-95px;opacity:.13;filter:blur(7px);transform:rotate(25deg);z-index:-1}
+#hg-home-sections .hgh-steps-heading{text-align:center}
+#hg-home-sections .hgh-steps-heading .hgh-eyebrow{justify-content:center}
+#hg-home-sections .hgh-steps-heading .hgh-eyebrow::after{display:none}
+#hg-home-sections .hgh-steps-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:45px;margin:43px 0 0;padding:0;list-style:none;text-align:center}
+#hg-home-sections .hgh-steps-grid::before{content:"";position:absolute;left:17%;right:17%;top:18px;border-top:1px dashed #a1c6cd}
+#hg-home-sections .hgh-step-number{position:relative;display:grid;place-items:center;width:37px;height:37px;margin:0 auto 19px;border:1px solid #94bac4;border-radius:50%;background:var(--hgh-paper);font-size:11px}
+#hg-home-sections .hgh-step-icon{display:grid;place-items:center;width:63px;height:63px;margin:0 auto 19px;border-radius:50%;background:#eaf3f4}
+#hg-home-sections .hgh-step-icon svg{width:30px;height:30px}
+#hg-home-sections .hgh-step h3{margin:0;font:500 26px/1.22 Georgia,serif;letter-spacing:-.5px}
+#hg-home-sections .hgh-step p{max-width:265px;margin:11px auto 0;color:var(--hgh-muted);font-size:13px}
+#hg-home-sections .hgh-faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px;margin-bottom:72px;padding:44px;border-radius:20px;background:linear-gradient(120deg,#e7f1f3,#f0f6f7);overflow:hidden;isolation:isolate}
+#hg-home-sections .hgh-faq-intro{position:relative;z-index:1}
+#hg-home-sections .hgh-faq h2{font-size:clamp(30px,3.5cqw,43px)}
+#hg-home-sections .hgh-faq-intro>p:not(.hgh-eyebrow){max-width:260px;margin:18px 0 22px;color:var(--hgh-muted);font-size:14px}
+#hg-home-sections .hgh-faq-list{position:relative;align-self:start;padding:0 20px;border-radius:11px;background:#ffffffb8;z-index:1}
+#hg-home-sections .hgh-faq details+details{border-top:1px solid #d6e3e6}
+#hg-home-sections .hgh-faq summary{position:relative;display:flex;align-items:center;min-height:65px;padding:17px 30px 17px 0;list-style:none;font-size:12px;font-weight:600;cursor:pointer}
+#hg-home-sections .hgh-faq summary::-webkit-details-marker{display:none}
+#hg-home-sections .hgh-faq summary::after{content:"+";position:absolute;right:0;font-size:22px;font-weight:400}
+#hg-home-sections .hgh-faq details[open] summary::after{content:"−"}
+#hg-home-sections .hgh-faq details>p{margin:0;padding:0 12px 22px 0;color:var(--hgh-muted);font-size:13px}
+#hg-home-sections .hgh-olive-faq{left:35px;bottom:-145px;width:290px;transform:rotate(-55deg);opacity:.8;z-index:0;filter:drop-shadow(9px 9px 5px #42514320)}
+#hg-home-sections .hgh-shadow-faq{left:90px;bottom:-140px;width:330px;transform:rotate(-55deg);opacity:.08;filter:blur(4px);z-index:0}
+#hg-home-sections .hgh-status{max-width:800px;margin:0 auto 30px;padding:15px 20px;border-radius:9px;background:#ecf2f3;color:#345461;font-size:13px}
+@container(max-width:1000px){#hg-home-sections .hgh-wrap{width:calc(100% - 48px)}#hg-home-sections .hgh-experience-title{font-size:23px}#hg-home-sections .hgh-experience{min-height:330px}#hg-home-sections .hgh-experience-copy{inset:auto 14px 20px;padding-right:21px}#hg-home-sections .hgh-round-arrow{right:10px;bottom:19px}#hg-home-sections .hgh-destination-grid{gap:17px}#hg-home-sections .hgh-destination-body{padding-inline:17px}#hg-home-sections .hgh-destination h3{font-size:27px}#hg-home-sections .hgh-feature-copy{padding-inline:28px}#hg-home-sections .hgh-faq{padding:32px;gap:30px}}
+@container(max-width:760px){#hg-home-sections .hgh-experience-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}#hg-home-sections .hgh-experience{min-height:350px}#hg-home-sections .hgh-experience-title{font-size:27px}#hg-home-sections .hgh-destination-grid{grid-template-columns:1fr;gap:30px}#hg-home-sections .hgh-destination-photo{height:330px}#hg-home-sections .hgh-destination h3{font-size:31px}#hg-home-sections .hgh-destination-body{padding:22px}#hg-home-sections .hgh-feature{grid-template-columns:1fr}#hg-home-sections .hgh-feature-photo{min-height:380px;-webkit-mask:none;mask:none}#hg-home-sections .hgh-feature-photo::after{content:"";position:absolute;inset:auto -5% -20px;width:110%;height:40px;border-radius:50%;background:#f6f2e9}#hg-home-sections .hgh-feature-copy{padding:32px 32px 47px}#hg-home-sections .hgh-feature h2{font-size:56px}#hg-home-sections .hgh-feature h2 br{display:none}#hg-home-sections .hgh-feature-description{max-width:430px}#hg-home-sections .hgh-faq{grid-template-columns:1fr}#hg-home-sections .hgh-olive-faq{left:auto;right:-105px;top:-100px;bottom:auto;opacity:.15}#hg-home-sections .hgh-shadow-faq{display:none}}
+@container(max-width:520px){#hg-home-sections .hgh-wrap{width:calc(100% - 36px)}#hg-home-sections .hgh-section{padding-block:50px}#hg-home-sections .hgh-eyebrow{font-size:9px;letter-spacing:.18em;gap:10px}#hg-home-sections h2{font-size:34px;letter-spacing:-.9px}#hg-home-sections .hgh-subtitle{font-size:14px}#hg-home-sections .hgh-heading{gap:12px;margin-bottom:26px}#hg-home-sections .hgh-heading-compass{display:none}#hg-home-sections .hgh-olive-corner{width:145px;top:-44px;left:-70px;opacity:.4}#hg-home-sections .hgh-shadow-experience{display:none}#hg-home-sections .hgh-experience-grid{gap:12px}#hg-home-sections .hgh-experience{min-height:275px;border-radius:13px}#hg-home-sections .hgh-experience-icon{top:13px;left:13px;width:36px;height:36px}#hg-home-sections .hgh-experience-icon svg{width:21px;height:21px}#hg-home-sections .hgh-experience-copy{inset:auto 12px 17px;padding-right:0}#hg-home-sections .hgh-experience-title{font-size:23px}#hg-home-sections .hgh-experience-caption{padding-right:25px;font-size:10px}#hg-home-sections .hgh-round-arrow{right:10px;bottom:16px;width:23px;height:23px;font-size:15px}#hg-home-sections .hgh-destinations{padding-top:0;padding-bottom:45px}#hg-home-sections .hgh-destinations::after{display:none}#hg-home-sections .hgh-destination-photo{height:300px}#hg-home-sections .hgh-feature-photo{min-height:300px}#hg-home-sections .hgh-feature-copy{padding:29px 25px 40px}#hg-home-sections .hgh-feature h2{font-size:45px}#hg-home-sections .hgh-feature-description{font-size:15px}#hg-home-sections .hgh-feature-details{gap:21px}#hg-home-sections .hgh-steps-grid{grid-template-columns:1fr;gap:28px;text-align:left;margin-top:32px}#hg-home-sections .hgh-steps-grid::before{display:none}#hg-home-sections .hgh-step{display:grid;grid-template-columns:41px 1fr;gap:14px}#hg-home-sections .hgh-step-number{margin:0}#hg-home-sections .hgh-step-icon{display:none}#hg-home-sections .hgh-step h3{font-size:25px}#hg-home-sections .hgh-step p{max-width:none;margin:8px 0 0}#hg-home-sections .hgh-faq{padding:27px 21px;margin-bottom:40px;gap:24px}#hg-home-sections .hgh-faq-list{padding-inline:15px}#hg-home-sections .hgh-faq summary{font-size:12px;min-height:66px}#hg-home-sections .hgh-status{margin-inline:18px}}
+@container(max-width:340px){#hg-home-sections .hgh-experience-grid{grid-template-columns:1fr}#hg-home-sections .hgh-experience{min-height:320px}}
+@media(prefers-reduced-motion:reduce){#hg-home-sections .hgh-experience,#hg-home-sections .hgh-experience img,#hg-home-sections .hgh-button{transition:none!important}#hg-home-sections .hgh-experience:hover,#hg-home-sections .hgh-experience:hover img,#hg-home-sections .hgh-button:hover{transform:none}}
+
+/* V2: matte material layers + local-file-safe feature photo. */
+#hg-home-sections{background-color:var(--hgh-paper);background-image:linear-gradient(#faf8f347,#faf8f347),url("home-premium-assets/decor-11.webp");background-repeat:repeat;background-size:auto,520px 520px}
+#hg-home-sections .hgh-experiences{background:radial-gradient(ellipse at 100% 0,#e8e0cf1a,transparent 48%)}
+#hg-home-sections .hgh-feature{background-color:#f8f5ee;background-image:radial-gradient(ellipse at 78% 24%,#ffffff7a,transparent 65%),url("home-premium-assets/decor-12.webp");background-size:auto,520px 520px;background-blend-mode:normal,multiply}
+#hg-home-sections .hgh-feature-photo{-webkit-mask:none;mask:none;border-radius:0 9% 11% 0 / 0 52% 48% 0;min-width:0}
+#hg-home-sections .hgh-feature-photo img{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:420px;object-fit:cover;object-position:58% 50%;opacity:1;visibility:visible}
+#hg-home-sections .hgh-feature-copy{background:radial-gradient(ellipse at 35% 5%,#ffffff30,transparent 72%)}
+#hg-home-sections .hgh-destination-body{background-image:linear-gradient(#faf8f34d,#faf8f34d),url("home-premium-assets/decor-13.webp");background-size:auto,520px 520px}
+#hg-home-sections .hgh-shadow-feature{width:370px;right:-50px;bottom:-90px;opacity:.18;filter:blur(8px)}
+#hg-home-sections .hgh-shadow-experience{opacity:.12;filter:blur(7px)}
+#hg-home-sections .hgh-faq{background-image:linear-gradient(120deg,#e5f0f2ed,#eef5f6e8),url("home-premium-assets/decor-14.webp");background-size:auto,520px 520px}
+@container(max-width:760px){#hg-home-sections .hgh-feature-photo{border-radius:0;min-height:380px}#hg-home-sections .hgh-feature-photo img{min-height:380px}#hg-home-sections .hgh-feature-photo::after{background-color:#f8f5ee;background-image:url("home-premium-assets/decor-15.webp");background-size:520px 520px}}
+@container(max-width:520px){#hg-home-sections .hgh-feature-photo,#hg-home-sections .hgh-feature-photo img{min-height:300px}#hg-home-sections .hgh-shadow-feature{width:260px;opacity:.12}}
