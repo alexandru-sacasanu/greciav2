@@ -1,0 +1,66 @@
+/* Hello Grecia mobile-only patch. Load AFTER the coastal-pin fragment. */
+#hg-coast .coast-mobile-dots{display:none}
+@media(max-width:620px){
+ #hg-coast{width:min(94vw,460px);max-height:94dvh;border-radius:21px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-padding-top:12px}
+ #hg-coast::-webkit-scrollbar{display:none}
+ #hg-coast .coast-layout{display:flex;flex-direction:column;border-radius:20px;min-height:0;overflow:hidden}
+ #hg-coast .coast-photo-panel{height:clamp(260px,42svh,390px);min-height:clamp(260px,42svh,390px);flex-shrink:0;overflow:hidden}
+ #hg-coast .coast-main-photo{object-fit:cover;object-position:center 43%;border-radius:20px 20px 0 0}
+ #hg-coast .coast-photo-shade{inset:58% 0 0;background:linear-gradient(transparent,#003e5466)}
+ #hg-coast .coast-location{top:16px;left:15px;max-width:calc(100% - 125px);font-size:9px;letter-spacing:.5px;line-height:1.4;padding:9px 11px;min-height:36px;display:flex;align-items:center;overflow-wrap:anywhere}
+ #hg-coast .coast-top-actions{top:12px;right:12px;gap:6px}
+ #hg-coast .coast-top-actions button{width:44px;height:44px;font-size:25px;box-shadow:0 2px 10px #0b36591c}
+ #hg-coast .coast-top-actions button:focus:not(:focus-visible){outline:none}
+ #hg-coast .coast-side-caption{display:none}
+ #hg-coast .coast-photo-controls{left:16px;right:126px;bottom:42px;display:block}
+ #hg-coast .coast-thumbnails,#hg-coast .coast-counter{display:none}
+ #hg-coast .coast-gallery-button{display:block;margin:0;padding:9px 12px;font-size:11px;line-height:1.4;min-height:44px;max-width:100%;white-space:normal;text-align:center;border:1px solid #ffffffb3;background:#00445a30;backdrop-filter:blur(8px)}
+ #hg-coast .coast-motion{top:auto;left:auto;right:16px;bottom:42px;min-height:44px;max-width:101px;padding:9px 11px;line-height:1.4;font-size:11px;border:1px solid #ffffffb3;background:#00445a30;z-index:4;backdrop-filter:blur(8px)}
+ #hg-coast .coast-mobile-dots{position:absolute;left:50%;bottom:23px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:6px;z-index:4;pointer-events:none}
+ #hg-coast .coast-mobile-dots span{width:5px;height:5px;border-radius:50%;background:#ffffff70}
+ #hg-coast .coast-mobile-dots span.active{width:7px;height:7px;background:white;box-shadow:0 0 0 2px #ffffff18}
+ #hg-coast .coast-sand-panel{padding:32px 22px calc(20px + env(safe-area-inset-bottom,0px));justify-content:flex-start;min-height:0}
+ #hg-coast .coast-shore{width:140px;height:calc(min(94vw,460px) + 40px);left:50%;top:0;transform:translate(-50%,-50%) rotate(90deg)!important}
+ #hg-coast .coast-eyebrow{font-size:8px;letter-spacing:1.7px;line-height:1.5;margin:0 0 9px}
+ #hg-coast h2{font-size:clamp(33px,9.5vw,43px);line-height:1.08;letter-spacing:-1.05px;max-width:none;overflow-wrap:anywhere}
+ #hg-coast h2.coast-long-title{font-size:clamp(29px,8vw,37px);line-height:1.12;letter-spacing:-.65px}
+ #hg-coast .coast-ornament{width:94px;height:14px;margin:11px 0 12px}
+ #hg-coast .coast-description{font-size:16px;line-height:1.55;margin:0 0 18px}
+ #hg-coast .coast-tags{gap:7px;justify-content:space-between;margin:1px 0 20px}
+ #hg-coast .coast-tag{font-size:11px;line-height:1.35;gap:6px;min-width:0;overflow-wrap:anywhere}
+ #hg-coast .coast-tag svg{height:23px;width:23px}
+ #hg-coast .coast-tagline{display:none}
+ #hg-coast .coast-explore{min-height:49px;border-radius:28px;padding:13px 18px;font-size:14px;line-height:1.4;box-shadow:0 6px 18px #0a98b825}
+ #hg-coast .coast-stays{min-height:44px;font-size:12px;line-height:1.4;padding:11px 0;text-underline-offset:4px}
+ #hg-coast .coast-signature{justify-content:center;font-size:8px;letter-spacing:2px;margin-top:9px}
+ #hg-coast .coast-status:empty{display:none}
+ #hg-coast .coast-gallery{position:fixed;inset:3dvh 3vw;padding:16px;border-radius:19px;gap:14px}
+ #hg-coast .coast-gallery-header strong{font-size:22px;line-height:1.2;overflow-wrap:anywhere}
+ #hg-coast .coast-gallery-close,#hg-coast .coast-gallery-navigation button{min-height:44px;min-width:44px;font-size:12px;padding:9px 12px}
+ #hg-coast .coast-gallery-photo{max-height:64dvh;object-fit:contain}
+}
+@media(max-width:360px){
+ #hg-coast .coast-photo-panel{height:260px;min-height:260px}
+ #hg-coast .coast-sand-panel{padding-left:19px;padding-right:19px}
+ #hg-coast .coast-location{font-size:8px;padding:8px 9px}
+ #hg-coast .coast-photo-controls{left:13px;right:120px}
+ #hg-coast .coast-gallery-button{font-size:10px;padding:9px 10px}
+ #hg-coast .coast-motion{right:13px;font-size:10px;max-width:96px}
+ #hg-coast .coast-description{font-size:15px}
+}
+@media(max-width:620px) and (orientation:landscape){
+ #hg-coast .coast-photo-panel{height:210px;min-height:210px}
+}
+/* v8: center the rotated shoreline and overscan both card edges. */
+@media(max-width:620px){
+ #hg-coast .coast-shore{
+  transform-origin:50% 50%!important;
+  left:50%;top:0;
+  width:140px;
+  height:calc(min(94vw,460px) + 80px);
+  transform:translate(-50%,-50%) rotate(90deg)!important;
+ }
+ #hg-coast .coast-photo-controls,
+ #hg-coast .coast-motion{bottom:88px}
+ #hg-coast .coast-mobile-dots{bottom:64px}
+}

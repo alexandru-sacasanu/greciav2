@@ -1,0 +1,6 @@
+{
+  "name": "hello-grecia-cms",
+  "private": true,
+  "scripts": {"test": "node tests/database.mjs && node tests/frontend.mjs"},
+  "devDependencies": {"@electric-sql/pglite": "0.5.10", "linkedom": "0.18.13"}
+}

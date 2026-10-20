@@ -1,0 +1,52 @@
+import {PGlite} from '@electric-sql/pglite';
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db=new PGlite();
+await db.exec(`
+create role anon;create role authenticated;
+create schema auth;create schema storage;
+create table auth.users(id uuid primary key,email text);
+create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+grant usage on schema auth,storage to anon,authenticated;
+grant execute on function auth.uid() to anon,authenticated;
+create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
+create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text);
+alter table storage.objects enable row level security;
+grant select,insert,update,delete on storage.objects to anon,authenticated;
+`);
+await db.exec(await readFile(new URL('../supabase/migrations/001_cms.sql',import.meta.url),'utf8'));
+const admin='11111111-1111-4111-8111-111111111111',visitor='22222222-2222-4222-8222-222222222222';
+await db.query('insert into auth.users(id,email) values($1,$2),($3,$4)',[admin,'admin@example.com',visitor,'user@example.com']);
+await db.query('insert into private.admin_users(user_id) values($1)',[admin]);
+const dest=(await db.query("select id from public.destinations where slug='lefkada'")).rows[0].id;
+async function role(name,id=''){await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id]);await db.exec('set role '+name)}
+async function fail(sql,args=[]){let failed=false;try{await db.query(sql,args)}catch{failed=true}assert(failed,'Expected rejection: '+sql)}
+await role('authenticated',visitor);assert.equal((await db.query('select public.is_admin() allowed')).rows[0].allowed,false);
+await fail('insert into private.admin_users(user_id) values($1)',[visitor]);
+await fail("insert into public.offers(destination_id,type,slug,title) values($1,'accommodation','hack','Hack')",[dest]);
+assert.equal((await db.query("update public.site_settings set hero_title='Hack' returning id")).rows.length,0);
+await role('authenticated',admin);
+assert.equal((await db.query('select public.is_admin() allowed')).rows[0].allowed,true);
+const m=(await db.query("insert into public.media(storage_path) values('media/test.png') returning id")).rows[0].id;
+const input={destination_id:dest,type:'accommodation',slug:'villa',title:'Villa',price_unit:'night',status:'published',capacity:4};
+const saved=(await db.query('select public.save_offer($1::jsonb,$2::uuid[]) id',[JSON.stringify(input),[m]])).rows[0].id;
+const draft=(await db.query('select public.save_offer($1::jsonb,$2::uuid[]) id',[JSON.stringify({...input,slug:'draft',status:'draft'}),[]])).rows[0].id;
+await db.query("insert into storage.objects(bucket_id,name) values('site-media','media/test.png')");
+await role('anon');assert.equal((await db.query('select * from public.offers')).rows.length,1);
+assert.equal((await db.query('select * from public.offer_images')).rows.length,1);
+assert.equal((await db.query('select * from public.media')).rows.length,1);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify(input),[]]);
+await fail("insert into storage.objects(bucket_id,name) values('site-media','media/bad.png')");
+await role('authenticated',visitor);assert.equal((await db.query('select * from public.offers where id=$1',[draft])).rows.length,0);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify(input),[]]);
+await fail("insert into storage.objects(bucket_id,name) values('site-media','media/bad.png')");
+await role('authenticated',admin);await fail('delete from public.media where id=$1',[m]);
+// Gallery changes and offer edits roll back together if an image FK is invalid.
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,id:saved,title:'Must roll back'}),['33333333-3333-4333-8333-333333333333']]);
+assert.equal((await db.query('select title from public.offers where id=$1',[saved])).rows[0].title,'Villa');
+assert.equal((await db.query('select * from public.offer_images where offer_id=$1',[saved])).rows.length,1);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,slug:'bad-rental',type:'rental',rental_kind:null}),[]]);
+await db.query('update public.destinations set is_active=false where id=$1',[dest]);
+await role('anon');assert.equal((await db.query('select * from public.offers')).rows.length,0);assert.equal((await db.query('select * from public.media')).rows.length,0);
+await role('authenticated',admin);await db.query('delete from public.offers where id=$1',[saved]);assert.equal((await db.query('select * from public.offer_images')).rows.length,0);await db.query('delete from public.media where id=$1',[m]);
+await db.close();console.log('Database: migration, RLS, admin authorization, publication, storage rules, constraints and atomic galleries passed.');
