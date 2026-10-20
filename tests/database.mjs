@@ -28,8 +28,15 @@ assert.equal((await db.query("update public.site_settings set hero_title='Hack' 
 await role('authenticated',admin);
 assert.equal((await db.query('select public.is_admin() allowed')).rows[0].allowed,true);
 const m=(await db.query("insert into public.media(storage_path) values('media/test.png') returning id")).rows[0].id;
-const input={destination_id:dest,type:'accommodation',slug:'villa',title:'Villa',price_unit:'night',status:'published',capacity:4};
+const input={destination_id:dest,type:'accommodation',slug:'villa',title:'Villa',price_unit:'night',status:'published',capacity:4,rooms_count:3,rating_average:4.9,review_count:12,available_from:'2026-05-01',available_to:'2026-10-31',reviews:[{display_name:'Ana',rating:5,body:'Superb'}]};
 const saved=(await db.query('select public.save_offer($1::jsonb,$2::uuid[]) id',[JSON.stringify(input),[m]])).rows[0].id;
+const savedRow=(await db.query('select rating_average,review_count,rooms_count,available_from::text,available_to::text,reviews from public.offers where id=$1',[saved])).rows[0];
+assert.equal(Number(savedRow.rating_average),4.9);
+assert.equal(savedRow.review_count,12);
+assert.equal(savedRow.rooms_count,3);
+assert.equal(savedRow.available_from,'2026-05-01');
+assert.equal(savedRow.available_to,'2026-10-31');
+assert.equal(savedRow.reviews[0].display_name,'Ana');
 const draft=(await db.query('select public.save_offer($1::jsonb,$2::uuid[]) id',[JSON.stringify({...input,slug:'draft',status:'draft'}),[]])).rows[0].id;
 await db.query("insert into storage.objects(bucket_id,name) values('site-media','media/test.png')");
 await role('anon');assert.equal((await db.query('select * from public.offers')).rows.length,1);
@@ -46,6 +53,9 @@ await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...
 assert.equal((await db.query('select title from public.offers where id=$1',[saved])).rows[0].title,'Villa');
 assert.equal((await db.query('select * from public.offer_images where offer_id=$1',[saved])).rows.length,1);
 await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,slug:'bad-rental',type:'rental',rental_kind:null}),[]]);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,slug:'bad-dates',available_from:'2026-10-01',available_to:'2026-05-01'}),[]]);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,slug:'bad-rating',rating_average:5.5}),[]]);
+await fail('select public.save_offer($1::jsonb,$2::uuid[])',[JSON.stringify({...input,slug:'bad-rental-rooms',type:'rental',rental_kind:'car',rooms_count:2}),[]]);
 await db.query('update public.destinations set is_active=false where id=$1',[dest]);
 await role('anon');assert.equal((await db.query('select * from public.offers')).rows.length,0);assert.equal((await db.query('select * from public.media')).rows.length,0);
 await role('authenticated',admin);await db.query('delete from public.offers where id=$1',[saved]);assert.equal((await db.query('select * from public.offer_images')).rows.length,0);await db.query('delete from public.media where id=$1',[m]);

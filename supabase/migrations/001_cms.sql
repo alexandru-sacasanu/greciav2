@@ -60,10 +60,17 @@ create table public.offers (
  price_unit public.price_unit not null default 'night',
  capacity integer check(capacity between 1 and 10000),
  bedrooms integer check(bedrooms between 0 and 1000),
+ rooms_count integer check(rooms_count is null or rooms_count between 1 and 1000),
  duration_minutes integer check(duration_minutes between 1 and 100000),
  amenities text[] not null default '{}',
  includes_text text not null default '',
  contact_text text not null default '',
+ rating_average numeric(3,2) check(rating_average is null or (rating_average between 1.0 and 5.0)),
+ review_count integer not null default 0 check(review_count >= 0),
+ reviews jsonb not null default '[]'::jsonb check(jsonb_typeof(reviews) = 'array'),
+ photos jsonb not null default '[]'::jsonb check(jsonb_typeof(photos) = 'array'),
+ available_from date,
+ available_to date,
  status public.content_status not null default 'draft',
  featured boolean not null default false,
  sort_order integer not null default 0,
@@ -72,7 +79,9 @@ create table public.offers (
  unique(destination_id,slug),
  check((type='rental' and rental_kind is not null) or (type<>'rental' and rental_kind is null)),
  check(bedrooms is null or type='accommodation'),
- check(duration_minutes is null or type in ('excursion','cruise'))
+ check(rooms_count is null or type='accommodation'),
+ check(duration_minutes is null or type in ('excursion','cruise')),
+ check(available_from is null or available_to is null or available_from <= available_to)
 );
 create index offers_destination_type_status_idx on public.offers(destination_id,type,status,sort_order);
 create table public.offer_images (
@@ -142,10 +151,10 @@ declare v public.offers; saved_id uuid;begin
  if not public.is_admin() then raise exception 'Admin access required' using errcode='42501';end if;
  v=jsonb_populate_record(null::public.offers,p_offer);
  if v.id is null then
-  insert into public.offers(destination_id,type,rental_kind,slug,title,summary,description,locality,address,price_from,currency,price_unit,capacity,bedrooms,duration_minutes,amenities,includes_text,contact_text,status,featured,sort_order)
-  values(v.destination_id,v.type,v.rental_kind,v.slug,v.title,coalesce(v.summary,''),coalesce(v.description,''),coalesce(v.locality,''),coalesce(v.address,''),v.price_from,coalesce(v.currency,'EUR'),coalesce(v.price_unit,'night'),v.capacity,v.bedrooms,v.duration_minutes,coalesce(v.amenities,'{}'),coalesce(v.includes_text,''),coalesce(v.contact_text,''),coalesce(v.status,'draft'),coalesce(v.featured,false),coalesce(v.sort_order,0)) returning id into saved_id;
+  insert into public.offers(destination_id,type,rental_kind,slug,title,summary,description,locality,address,price_from,currency,price_unit,capacity,bedrooms,rooms_count,duration_minutes,amenities,includes_text,contact_text,rating_average,review_count,reviews,photos,available_from,available_to,status,featured,sort_order)
+  values(v.destination_id,v.type,v.rental_kind,v.slug,v.title,coalesce(v.summary,''),coalesce(v.description,''),coalesce(v.locality,''),coalesce(v.address,''),v.price_from,coalesce(v.currency,'EUR'),coalesce(v.price_unit,'night'),v.capacity,v.bedrooms,v.rooms_count,v.duration_minutes,coalesce(v.amenities,'{}'),coalesce(v.includes_text,''),coalesce(v.contact_text,''),v.rating_average,coalesce(v.review_count,0),coalesce(v.reviews,'[]'::jsonb),coalesce(v.photos,'[]'::jsonb),v.available_from,v.available_to,coalesce(v.status,'draft'),coalesce(v.featured,false),coalesce(v.sort_order,0)) returning id into saved_id;
  else
-  update public.offers set destination_id=v.destination_id,type=v.type,rental_kind=v.rental_kind,slug=v.slug,title=v.title,summary=coalesce(v.summary,''),description=coalesce(v.description,''),locality=coalesce(v.locality,''),address=coalesce(v.address,''),price_from=v.price_from,currency=coalesce(v.currency,'EUR'),price_unit=v.price_unit,capacity=v.capacity,bedrooms=v.bedrooms,duration_minutes=v.duration_minutes,amenities=coalesce(v.amenities,'{}'),includes_text=coalesce(v.includes_text,''),contact_text=coalesce(v.contact_text,''),status=v.status,featured=coalesce(v.featured,false),sort_order=coalesce(v.sort_order,0) where id=v.id returning id into saved_id;
+  update public.offers set destination_id=v.destination_id,type=v.type,rental_kind=v.rental_kind,slug=v.slug,title=v.title,summary=coalesce(v.summary,''),description=coalesce(v.description,''),locality=coalesce(v.locality,''),address=coalesce(v.address,''),price_from=v.price_from,currency=coalesce(v.currency,'EUR'),price_unit=v.price_unit,capacity=v.capacity,bedrooms=v.bedrooms,rooms_count=v.rooms_count,duration_minutes=v.duration_minutes,amenities=coalesce(v.amenities,'{}'),includes_text=coalesce(v.includes_text,''),contact_text=coalesce(v.contact_text,''),rating_average=v.rating_average,review_count=coalesce(v.review_count,0),reviews=coalesce(v.reviews,'[]'::jsonb),photos=coalesce(v.photos,'[]'::jsonb),available_from=v.available_from,available_to=v.available_to,status=v.status,featured=coalesce(v.featured,false),sort_order=coalesce(v.sort_order,0) where id=v.id returning id into saved_id;
   if saved_id is null then raise exception 'Offer not found';end if;
  end if;
  delete from public.offer_images where offer_id=saved_id;

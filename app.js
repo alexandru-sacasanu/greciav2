@@ -19,7 +19,8 @@ function images(o){return(o.offer_images||[]).slice().sort((a,b)=>a.sort_order-b
 function price(o){if(o.price_from==null)return 'Preț la cerere';try{return new Intl.NumberFormat('ro-RO',{style:'currency',currency:o.currency}).format(o.price_from)}catch{return o.price_from+' '+o.currency}}
 function render(){const dest=currentDestination();let data=offers.filter(o=>o.destination_id===current);data=data.filter(o=>['car','atv'].includes(category)?o.type==='rental'&&o.rental_kind===category:o.type===category);if(onlyFavorites)data=data.filter(o=>favorites.has(o.id));if(guestFilter)data=data.filter(o=>!['accommodation','rental'].includes(o.type)||o.capacity==null||o.capacity>=guestFilter);
  $('#cards').innerHTML=data.map(o=>{const photo=images(o)[0],url=photo?HG.mediaUrl(photo):(o.photos?.[0]?.url||(o.demoPhoto?`https://images.unsplash.com/${o.demoPhoto}?auto=format&fit=crop&w=800&q=85`:''));return `<article class="card" data-view="${o.id}"><div class="photo">${url?`<img src="${E(url)}" alt="${E(photo?.alt_text||o.title)}" loading="lazy">`:'<span class="photo-empty">Fotografii în curând</span>'}${o.featured?'<span class="rating">Recomandată</span>':''}<button class="heart" aria-label="Salvează ${E(o.title)}" aria-pressed="${favorites.has(o.id)}" data-save="${o.id}">${favorites.has(o.id)?'♥':'♡'}</button></div><div class="card-body"><h3>${E(o.title)}</h3><p class="location">⌖ ${E(o.locality||dest?.name)}</p><div class="price-row"><div><b>${E(price(o))}</b><small>${o.price_from==null?'': '/ '+E(HG.units[o.price_unit]||'')}</small></div><button class="view" data-view="${o.id}">Vezi oferta ↗</button></div></div></article>`}).join('')||`<p class="empty-state">${loadError?'Conținutul nu a putut fi încărcat. Reîncarcă pagina sau încearcă mai târziu.':onlyFavorites?'Nu ai favorite în această categorie și destinație.':'Nu există oferte publicate pentru această selecție.'}</p>`;
- $('#count').textContent=favorites.size;$('#favorites').setAttribute('aria-pressed',String(onlyFavorites));$('#result').textContent=dest?`${data.length} oferte · ${dest.name}${guestFilter?' · '+guestFilter+' persoane':''}`:'Nicio destinație disponibilă';$$('[data-type]').forEach(b=>{b.classList.toggle('active',b.dataset.type===category);b.setAttribute('aria-pressed',String(b.dataset.type===category))})}
+ $('#count').textContent=favorites.size;$('#favorites').setAttribute('aria-pressed',String(onlyFavorites));$('#result').textContent=dest?`${data.length} oferte · ${dest.name}${guestFilter?' · '+guestFilter+' persoane':''}`:'Nicio destinație disponibilă';$$('[data-type]').forEach(b=>{b.classList.toggle('active',b.dataset.type===category);b.setAttribute('aria-pressed',String(b.dataset.type===category))});
+ window.HGOfferCards?.decorate('#cards',data,o=>({start_date:$('#checkin')?.value||'',end_date:$('#checkout')?.value||'',quantity:o.type==='rental'?1:Number($('#guests')?.value||2)}))}
 function openOffer(id) {
   const offer = offers.find(item => item.id === id);
   if (!offer) return;
@@ -48,6 +49,19 @@ function openOffer(id) {
         ? favorites.delete(offerId)
         : favorites.add(offerId);
       render();
+    },
+    onCheckout: ({ offer: checkoutOffer, selection }) => {
+      window.HGOfferModal.close();
+      window.HGCheckout.open({ offer: checkoutOffer, selection }, {
+        backgroundUrl: destination?.hero ? HG.mediaUrl(destination.hero) : undefined,
+        onBack: () => {
+          window.HGCheckout.close();
+          openOffer(id);
+        },
+        onPay: async () => {
+          throw Error('Plata nu este configurată încă. Contactează-ne pentru rezervare.');
+        }
+      });
     }
   });
 }
